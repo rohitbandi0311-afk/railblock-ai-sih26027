@@ -106,24 +106,25 @@ Therefore, the system searches for a **better overall feasible plan**, rather th
 
 | Layer | Technology |
 |---|---|
-| Application | **Streamlit** |
+| Application | **Streamlit / AI Studio prototype** |
 | Optimization | **Google OR-Tools CP-SAT** |
-| Language | **Python 3.11+** |
-| Data | **CSV / simulated railway scenarios** |
-| Validation | **Python constraint checks** |
+| Language | **Python** |
+| Data | **Simulated railway scenarios** |
+| Validation | **Constraint checks** |
 | Testing | **Pytest** |
-| Deployment | **Streamlit Community Cloud** |
 | Version Control | **GitHub** |
 
 ---
 
 ## 🌐 Live Prototype
 
-### 🚀 [Open RailBlock AI Prototype](https://sihjunction.vercel.app/)
+### 🚀 [Open RailBlock AI Prototype](https://railopt-ai-sih26027.ai.studio/)
 
-Interactive prototype demonstrating the proposed SIH solution and planning workflow.
+**RailOpt AI — SIH26027 Prototype**
 
-> **Prototype note:** The public demonstration uses simulated data and is intended for SIH evaluation and concept demonstration.
+This is the primary interactive prototype for the SIH solution, demonstrating the proposed railway block-planning workflow, optimization logic, scheduling decisions and explainable outputs.
+
+> **Prototype note:** The demonstration uses simulated data and is intended for SIH evaluation and concept demonstration. It does not represent official Indian Railways operational data.
 
 ---
 
@@ -148,7 +149,7 @@ Interactive prototype demonstrating the proposed SIH solution and planning workf
 ```text
 railblock-ai-sih26027/
 │
-├── app.py                    # Streamlit application
+├── app.py                    # Application
 ├── railblock/
 │   ├── optimizer.py          # CP-SAT optimization engine
 │   ├── validation.py         # Independent validation
