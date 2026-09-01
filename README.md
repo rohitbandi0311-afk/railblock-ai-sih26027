@@ -1,78 +1,222 @@
-# RailBlock AI
+# 🚆 RailBlock AI
 
-An explainable decision-support prototype for **SIH26027: AI-Powered Automatic Block Planning to Maximize Asset Availability for Train Operations on Indian Railways**.
+### AI-Powered Automatic Block Planning for Indian Railways
 
-## Official team information
+> **Smart India Hackathon 2026 · SIH26027**  
+> **Team Thedevodyssey · Aditya University**
 
-- **Institution:** Aditya University
-- **Team:** Thedevodyssey
-- **Members:** B. Rohith, Kavya Sharma, Shadiq, Sneha, S. Rohith, K. Anand Sai
-- **PS ID:** SIH26027
+RailBlock AI is an **explainable AI-assisted decision-support prototype** for planning railway maintenance blocks while minimizing disruption to train operations.
 
-No member roles or personal contact details are assigned or inferred in this project.
+It evaluates **maintenance requests, train paths, time windows, sections, crews, priorities and operational conflicts** to recommend a feasible and optimized block plan.
 
-> Data notice: every train, asset, request, time, and result in this repository is simulated demonstration data. Nothing is presented as an official Indian Railways record, measured operational impact, deployed integration, or field-validated accuracy.
+---
 
-## What the prototype demonstrates
+## 🎯 SIH Problem Statement
 
-- maintenance requests with duration, priority, department, window, section and crew;
-- simulated train paths, including protected and delay-tolerant paths;
-- CP-SAT selection of feasible block start times at 15-minute resolution;
-- hard train, section, window and crew constraints;
-- priority-aware objective with explicit operational-interaction penalties;
-- independent post-solve conflict validation;
-- before/after KPIs and a visual possession timeline;
-- event-driven re-planning when a demo train path is removed.
+**SIH26027 — AI-Powered Automatic Block Planning to Maximize Asset Availability for Train Operations on Indian Railways**
 
-The app is a planner recommendation layer. It does not replace railway authorization, operating rules, or safety procedures.
+### Our Objective
 
-## Quick start
+> **Maximize asset availability while minimizing operational disruption and respecting railway planning constraints.**
 
-Requires Python 3.11+.
+---
 
-```bash
-uv sync --extra dev
-uv run streamlit run app.py
-uv run pytest
+## 💡 Our Solution
+
+```text
+Maintenance Requests + Train Schedule + Constraints
+                         ↓
+                  RailBlock AI Engine
+                         ↓
+                Constraint Validation
+                         ↓
+                 CP-SAT Optimization
+                         ↓
+              Recommended Block Plan
+                         ↓
+          Timeline + KPIs + Explanation
 ```
 
-Open the local URL printed by Streamlit.
+### ✨ Key Features
 
-## Public deployment
+- 🛠️ Maintenance requests with duration, priority, department, section, crew and window
+- 🚆 Train-path awareness with protected and delay-tolerant paths
+- 🧠 **Google OR-Tools CP-SAT** constraint optimization
+- ⏱️ 15-minute candidate block start resolution
+- 🚫 Hard constraints for train, section, window and crew conflicts
+- 🎯 Priority-aware objective with operational-interaction penalties
+- 🔍 Independent post-solve conflict validation
+- 📊 Before/after planning KPIs
+- 📅 Visual possession / block timeline
+- 🔄 Scenario-based dynamic re-planning
+- 💬 Explainable recommendations
 
-The repository is ready for Streamlit Community Cloud and requires no secrets.
+---
 
-1. In Streamlit Community Cloud, select **Create app**.
-2. Choose the `railblock-ai-sih26027` GitHub repository and the `main` branch.
-3. Set the entry file to `app.py`.
-4. Use Python 3.11 or newer; Python 3.11 is the recommended deployment baseline.
-5. Leave the app URL and other advanced settings at their defaults, then deploy.
+## 🏗️ Solution Architecture
 
-The platform installs the runtime packages from `requirements.txt`. Demo CSV files are resolved relative to the repository through `pathlib`, so the app does not depend on a Windows working directory or local absolute paths.
+```text
+┌──────────────────────────────┐
+│ Railway Input Data           │
+│ Trains • Assets • Requests   │
+│ Crews • Maintenance Windows  │
+└──────────────┬───────────────┘
+               ↓
+┌──────────────────────────────┐
+│ Data Preparation & Rules     │
+└──────────────┬───────────────┘
+               ↓
+┌──────────────────────────────┐
+│ RailBlock AI Optimization    │
+│ Google OR-Tools CP-SAT       │
+└──────────────┬───────────────┘
+               ↓
+┌──────────────────────────────┐
+│ Independent Validation       │
+│ Conflict & Feasibility Check │
+└──────────────┬───────────────┘
+               ↓
+┌──────────────────────────────┐
+│ Recommended Block Plan       │
+│ Timeline • KPIs • Explanation│
+└──────────────────────────────┘
+```
 
-## Demo in 90 seconds
+---
 
-1. On **Command overview**, point to the orange simulated-data notice.
-2. Compare the naive earliest-start baseline with the validated optimized plan.
-3. Open **Block plan** and explain the colored section timeline, selected crews and independent validator.
-4. Open **How it works** and explain hard constraints before the weighted objective.
-5. In the sidebar, cancel a simulated train and click **Re-plan scenario** to show rolling re-optimization.
-6. Close with **Limits & integration** to make the prototype boundary credible.
+## 🧮 Why Optimization Instead of Greedy Scheduling?
 
-## Structure
+A greedy approach may simply choose the **earliest available slot**. Railway block planning, however, involves multiple interacting constraints.
 
-- `app.py` — Streamlit demo and narrative
-- `railblock/optimizer.py` — CP-SAT candidate selection and objective
-- `railblock/validation.py` — independent safety/conflict checks
-- `railblock/data.py` — deterministic CSV loading
-- `data/` — explicitly simulated demo scenario
-- `tests/` — core optimization and re-planning checks
-- `docs/` — architecture, algorithm, data, pitch, Q&A, slide content
+RailBlock AI considers the planning problem globally across:
 
-## Public references used for problem framing
+- maintenance priority;
+- train movement conflicts;
+- maintenance duration;
+- section availability;
+- crew availability;
+- permitted maintenance windows;
+- operational interaction penalties.
 
-- Indian Railways training material defines line blocks and integrated blocks: <https://scr.indianrailways.gov.in/cris/uploads/files/1338377919151-REF.SM.pdf>
-- Indian Railways Track Machine Manual, Chapter 7, discusses block working and planning maintenance within block spells: <https://rdso.indianrailways.gov.in/works/uploads/File/IRTMM%202019%20CHAPTER%207.pdf>
-- Google OR-Tools documents CP-SAT as suitable for discrete scheduling with constraints: <https://developers.google.com/optimization/cp>
+Therefore, the system searches for a **better overall feasible plan**, rather than making an isolated earliest-slot decision.
 
-See `docs/` for assumptions, formulation, integration path, risks, and judge preparation.
+---
+
+## ⚙️ Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Application | **Streamlit** |
+| Optimization | **Google OR-Tools CP-SAT** |
+| Language | **Python 3.11+** |
+| Data | **CSV / simulated railway scenarios** |
+| Validation | **Python constraint checks** |
+| Testing | **Pytest** |
+| Deployment | **Streamlit Community Cloud** |
+| Version Control | **GitHub** |
+
+---
+
+## 🌐 Live Prototype
+
+### 🚀 [Open RailBlock AI Prototype](https://sihjunction.vercel.app/)
+
+Interactive prototype demonstrating the proposed SIH solution and planning workflow.
+
+> **Prototype note:** The public demonstration uses simulated data and is intended for SIH evaluation and concept demonstration.
+
+---
+
+## 👥 Team — Thedevodyssey
+
+**Institution:** Aditya University  
+**Problem Statement:** SIH26027
+
+| Team Member |
+|---|
+| B. Rohith |
+| Kavya Sharma |
+| Shadiq |
+| Sneha |
+| S. Rohith |
+| K. Anand Sai |
+
+---
+
+## 📁 Project Structure
+
+```text
+railblock-ai-sih26027/
+│
+├── app.py                    # Streamlit application
+├── railblock/
+│   ├── optimizer.py          # CP-SAT optimization engine
+│   ├── validation.py         # Independent validation
+│   └── data.py               # Scenario/data loading
+│
+├── data/                     # Simulated demonstration data
+├── tests/                    # Optimization & re-planning tests
+├── docs/                     # Architecture, algorithm & SIH material
+├── requirements.txt          # Runtime dependencies
+├── pyproject.toml            # Project configuration
+└── README.md                 # Project documentation
+```
+
+---
+
+## ▶️ Run Locally
+
+```bash
+git clone https://github.com/rohitbandi0311-afk/railblock-ai-sih26027.git
+cd railblock-ai-sih26027
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Run tests:
+
+```bash
+pytest
+```
+
+---
+
+## 🔬 Research & References
+
+The project is informed by:
+
+- Indian Railways material on line and integrated blocks
+- Indian Railways Track Machine Manual and maintenance planning concepts
+- Google OR-Tools CP-SAT constraint programming documentation
+- Railway asset, maintenance and operational scheduling concepts
+
+Detailed assumptions, formulation, integration considerations and SIH judge-preparation material are available in `docs/`.
+
+---
+
+## ⚠️ Prototype Disclaimer
+
+This repository is an **SIH proof-of-concept prototype**.
+
+- All train, asset, maintenance, time and result data are **simulated demonstration data**.
+- The system does **not** represent official Indian Railways operational data.
+- It does **not replace railway authorization, operating rules, safety procedures or human decision-making**.
+- Real-world TMS/SMMS/TDMS integration would require appropriate authorization, interfaces, security controls and domain validation.
+
+---
+
+## 🚀 Vision
+
+RailBlock AI aims to evolve into an **intelligent railway maintenance planning assistant** that combines operational information with maintenance requirements and continuously recommends safer, more efficient block plans.
+
+> **Plan smarter. Maintain faster. Keep trains moving. 🚆🇮🇳**
+
+---
+
+<div align="center">
+
+### 🇮🇳 SMART INDIA HACKATHON 2026
+
+**SIH26027 · RailBlock AI · Thedevodyssey**
+
+</div>
