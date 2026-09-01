@@ -128,6 +128,16 @@ This is the primary interactive prototype for the SIH solution, demonstrating th
 
 ---
 
+## 🎥 SIH Demo Video
+
+### ▶️ [Watch the RailBlock AI Demo Video](https://drive.google.com/drive/folders/1v0bAu8lX4_bdRO7anGyXyl2l35bPJfX5)
+
+The demo video presents the working prototype and demonstrates the **SIH26027 solution workflow, block-planning process, optimization and key system outputs**.
+
+> **Demo:** Smart India Hackathon 2026 · SIH26027 · Thedevodyssey
+
+---
+
 ## 👥 Team — Thedevodyssey
 
 **Institution:** Aditya University  
